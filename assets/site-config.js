@@ -23,9 +23,13 @@ window.WEDDING_CONFIG = {
       texto: "Si quieres pedir algo concreto, añádelo aquí. Si no, puedes borrar esta tarjeta."
     },
     {
-      titulo: "Regalo",
-      texto: "Si quieres añadir cuenta, Bizum, lista o simplemente dejar un mensaje bonito, escríbelo aquí."
-    },
+  titulo: "Regalo",
+  texto: "Vuestra presencia es nuestro mejor regalo, pero si os apetece tener un detalle con nosotros podéis hacerlo aquí:
+
+IBAN: ES00 0000 0000 0000 0000 0000
+Titular: Irene y Fernando"
+},
+
     {
       titulo: "Preguntas frecuentes",
       texto: "Usa esta tarjeta para niños, horarios, intolerancias, música, alojamiento o cualquier otra duda."
