@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Confirmar asistencia | Irene y Fernando</title>
+  <link rel="stylesheet" href="../assets/site.css">
+  <meta name="robots" content="noindex">
+</head>
+<body>
+  <main class="page">
+    <div class="wrap">
+      <section class="hero">
+        <p class="kicker">Confirmación personalizada</p>
+        <h1 class="title">Confirmar asistencia</h1>
+        <p class="subtitle" id="introText"></p>
+        <div class="actions">
+          <a class="button" id="volverInvitacion" href="../">Volver a la invitación</a>
+          <a class="button" id="verDetalles" href="../detalles/">Ver detalles</a>
+        </div>
+      </section>
+
+      <section class="panel" id="codePanel">
+        <h2>Busca tu invitación</h2>
+        <p class="lead">Si no has entrado desde tu enlace personal, escribe aquí tu código.</p>
+        <div class="form-grid">
+          <div>
+            <label for="manualCode">Código</label>
+            <input id="manualCode" type="text" autocomplete="off" placeholder="Ejemplo: AB12CD34EF">
+          </div>
+          <button class="button primary" id="loadCodeBtn" type="button">Cargar mi invitación</button>
+          <p class="muted">Consejo: cada familia o invitado tiene un enlace único. Lo más cómodo es mandar esa URL por WhatsApp.</p>
+        </div>
+      </section>
+
+      <section class="panel hidden" id="formPanel">
+        <span class="badge" id="badgeEstado">Pendiente</span>
+        <h2 id="grupoNombre">Tu invitación</h2>
+        <div class="info-list">
+          <div class="info-row"><strong>Invitados del grupo:</strong> <span id="grupoInvitados"></span></div>
+          <div class="info-row"><strong>Plazas reservadas:</strong> <span id="grupoPlazas"></span></div>
+          <div class="info-row" id="grupoAlergiasRow"><strong>Alergias conocidas:</strong> <span id="grupoAlergias"></span></div>
+          <div class="info-row" id="grupoNecesidadesRow"><strong>Necesidades especiales:</strong> <span id="grupoNecesidades"></span></div>
+        </div>
+
+        <div class="info-row" id="regaloBox" style="margin-top:16px; white-space:pre-line;">
+          <strong id="regaloTitulo">Regalo</strong><br>
+          <span id="regaloTexto">Vuestra presencia es nuestro mejor regalo, pero si os apetece tener un detalle con nosotros podéis hacerlo aquí:
+
+IBAN: ES00 0000 0000 0000 0000 0000
+Titular: Irene y Fernando</span>
+        </div>
+
+        <form id="rsvpForm" class="form-grid" style="margin-top:18px;">
+          <div>
+            <label>¿Vendréis?</label>
+            <div class="inline">
+              <label class="choice"><input type="radio" name="status" value="si"> Sí, asistimos</label>
+              <label class="choice"><input type="radio" name="status" value="no"> No podemos asistir</label>
+            </div>
+          </div>
+
+          <div>
+            <label for="attendingCount">¿Cuántas personas vendrán?</label>
+            <input id="attendingCount" name="attending_count" type="number" min="0" step="1">
+          </div>
+
+          <div>
+            <label for="dietNotes">Alergias, menú o cambios de dieta</label>
+            <textarea id="dietNotes" name="diet_notes" placeholder="Cuéntanos aquí si hay algo que debamos tener en cuenta."></textarea>
+          </div>
+
+          <div>
+            <label for="songRequest">Canción que os gustaría escuchar</label>
+            <input id="songRequest" name="song_request" type="text" placeholder="Ejemplo: La flaca">
+          </div>
+
+          <div>
+            <label for="message">Mensaje para los novios</label>
+            <textarea id="message" name="message" placeholder="Si os apetece, dejadnos una nota bonita."></textarea>
+          </div>
+
+          <button class="button primary" id="saveBtn" type="submit">Guardar respuesta</button>
+          <p class="muted" id="statusText"></p>
+        </form>
+
+        <div class="success hidden" id="successBox">
+          <h2 id="successTitle"></h2>
+          <p id="successText" class="lead" style="margin:0;"></p>
+        </div>
+      </section>
+
+      <footer class="small">
+        Esta página usa un código único por invitado o grupo.
+      </footer>
+    </div>
+  </main>
+
+  <script src="../assets/site-config.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      if (window.WEDDING_CONFIG && WEDDING_CONFIG.regaloConfirmacion) {
+        const titulo = document.getElementById('regaloTitulo');
+        const texto = document.getElementById('regaloTexto');
+        if (titulo && WEDDING_CONFIG.regaloConfirmacion.titulo) titulo.textContent = WEDDING_CONFIG.regaloConfirmacion.titulo;
+        if (texto && WEDDING_CONFIG.regaloConfirmacion.texto) texto.textContent = WEDDING_CONFIG.regaloConfirmacion.texto;
+      }
+    });
+  </script>
+  <script src="../assets/confirm.js"></script>
+</body>
+</html>
