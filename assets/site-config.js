@@ -29,7 +29,6 @@ window.WEDDING_CONFIG = {
 IBAN: ES00 0000 0000 0000 0000 0000
 Titular: Irene y Fernando"
 },
-
     {
       titulo: "Preguntas frecuentes",
       texto: "Usa esta tarjeta para niños, horarios, intolerancias, música, alojamiento o cualquier otra duda."
