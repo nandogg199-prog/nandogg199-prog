@@ -23,7 +23,7 @@ window.WEDDING_CONFIG = {
 
 window.RSVP_CONFIG = {
   functionUrl: "https://sehstzaaqtkvjigvczla.supabase.co/functions/v1/clever-processor",
-  anonKey: "PEGA_AQUI_TU_PUBLISHABLE_KEY_DE_SUPABASE",
+  anonKey: "sb_publishable_0MssxJVJ_qSkR99z21zVbg_8KoREAt3",
   campoCodigo: "código",
   exitoTitulo: "¡Respuesta guardada!",
   exitoTexto: "Gracias por responder. Si necesitas cambiar algo, puedes volver a entrar con el mismo enlace.",
