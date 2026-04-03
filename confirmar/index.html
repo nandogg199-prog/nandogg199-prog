@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Confirmar asistencia · Irene y Fernando</title>
+  <style>
+    :root{
+      --bg:#f8f4ef;
+      --card:#fffdfb;
+      --line:#e7d9cf;
+      --text:#57493f;
+      --muted:#8c7b6e;
+      --accent:#c69c8a;
+      --accent-dark:#a87b69;
+      --ok-bg:#eef7f0;
+      --ok-line:#c8dfcc;
+      --shadow:0 10px 30px rgba(112,86,69,.08);
+      --radius:22px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Georgia,"Times New Roman",serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top, rgba(255,255,255,.85), rgba(248,244,239,.96)),
+        linear-gradient(180deg,#fbf8f4 0%,#f6efe7 100%);
+    }
+    .wrap{max-width:760px;margin:0 auto;padding:24px 18px 50px}
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:24px;
+      margin-bottom:18px;
+    }
+    h1,h2,h3{margin:0 0 12px}
+    h1{font-size:clamp(28px,5vw,42px);text-align:center;font-weight:500}
+    h2{font-size:22px;font-weight:500}
+    h3{font-size:17px;font-weight:600;color:var(--accent-dark)}
+    p{line-height:1.65;margin:0 0 12px}
+    .muted{color:var(--muted)}
+    .center{text-align:center}
+    .hidden{display:none!important}
+    .badge{
+      display:inline-block;padding:7px 12px;border-radius:999px;
+      background:#f5ede7;border:1px solid var(--line);font-size:14px
+    }
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      width:100%;padding:14px 16px;border-radius:999px;border:0;
+      background:var(--accent);color:#fff;font-size:16px;cursor:pointer;
+      text-decoration:none;transition:.2s transform,.2s background;
+      font-family:inherit
+    }
+    .btn:hover{background:var(--accent-dark);transform:translateY(-1px)}
+    .btn.secondary{background:#fff;color:var(--text);border:1px solid var(--line)}
+    .grid{display:grid;gap:14px}
+    .grid.two{grid-template-columns:1fr 1fr}
+    @media (max-width:680px){.grid.two{grid-template-columns:1fr}}
+    label{display:block;font-size:14px;color:var(--muted);margin:0 0 6px}
+    input[type="text"],input[type="number"],textarea{
+      width:100%;padding:13px 14px;border-radius:16px;border:1px solid var(--line);
+      background:#fff;font:inherit;color:var(--text)
+    }
+    textarea{min-height:110px;resize:vertical}
+    .radios{display:grid;gap:10px;margin-top:10px}
+    .radio{
+      border:1px solid var(--line);border-radius:18px;padding:12px 14px;
+      display:flex;align-items:center;gap:10px
+    }
+    .details-box{
+      border:1px dashed var(--line);border-radius:18px;padding:14px;background:#fffdfa
+    }
+    .success{
+      border:1px solid var(--ok-line);
+      background:var(--ok-bg);
+      border-radius:18px;padding:16px
+    }
+    .small{font-size:14px}
+    .status{min-height:22px;margin-top:10px;color:var(--muted)}
+    .gift-card{
+      margin-top:6px;
+      background:linear-gradient(180deg,#fffdfb 0%,#fcf7f2 100%);
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:18px;
+    }
+    .gift-box{
+      border:1px dashed #d9c2b5;
+      border-radius:18px;
+      padding:14px;
+      background:#fff;
+      margin-top:12px;
+    }
+    .gift-label{
+      font-size:12px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:var(--muted);
+      margin-bottom:6px;
+    }
+    .iban{
+      font-size:20px;
+      line-height:1.5;
+      color:var(--accent-dark);
+      word-break:break-word;
+    }
+    .copy-row{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:12px;
+    }
+    .copy-btn{
+      width:auto;
+      min-width:170px;
+    }
+    .copy-ok{
+      align-self:center;
+      color:var(--muted);
+      font-size:14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card center">
+      <p class="muted">Confirmación de asistencia</p>
+      <h1>Irene y Fernando</h1>
+      <p id="introText" class="muted"></p>
+    </div>
+
+    <div id="codePanel" class="card">
+      <h2>Tu código</h2>
+      <p class="muted small">Introduce el código de tu invitación para cargar tus datos.</p>
+      <div class="grid">
+        <div>
+          <label for="manualCode">Código</label>
+          <input id="manualCode" type="text" placeholder="Ejemplo: AB12CD34">
+        </div>
+        <button id="loadCodeBtn" class="btn" type="button">Cargar mi invitación</button>
+      </div>
+      <div id="statusText" class="status"></div>
+    </div>
+
+    <div id="formPanel" class="hidden">
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap">
+          <div>
+            <p class="muted small">Invitación encontrada</p>
+            <h2 id="grupoNombre">Tu invitación</h2>
+          </div>
+          <span id="badgeEstado" class="badge">Pendiente</span>
+        </div>
+
+        <div class="grid two" style="margin-top:16px">
+          <div class="details-box">
+            <h3>Invitados</h3>
+            <p id="grupoInvitados">—</p>
+          </div>
+          <div class="details-box">
+            <h3>Plazas disponibles</h3>
+            <p><span id="grupoPlazas">—</span></p>
+          </div>
+          <div id="grupoAlergiasRow" class="details-box hidden">
+            <h3>Alergias / notas previas</h3>
+            <p id="grupoAlergias">—</p>
+          </div>
+          <div id="grupoNecesidadesRow" class="details-box hidden">
+            <h3>Necesidades previas</h3>
+            <p id="grupoNecesidades">—</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="giftCard" class="card hidden">
+        <div class="gift-card">
+          <h2 id="giftTitle">Regalo</h2>
+          <p id="giftText"></p>
+          <div class="gift-box">
+            <div class="gift-label">IBAN</div>
+            <div id="giftIban" class="iban">—</div>
+            <div class="gift-label" style="margin-top:12px">Titular</div>
+            <div id="giftTitular">—</div>
+          </div>
+          <div class="copy-row">
+            <button id="copyIbanBtn" class="btn secondary copy-btn" type="button">Copiar IBAN</button>
+            <span id="copyOk" class="copy-ok"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Responder</h2>
+        <form id="rsvpForm" class="grid">
+          <div>
+            <label>¿Asistiréis?</label>
+            <div class="radios">
+              <label class="radio"><input type="radio" name="status" value="si"> Sí, allí estaremos</label>
+              <label class="radio"><input type="radio" name="status" value="no"> No podremos asistir</label>
+              <label class="radio"><input type="radio" name="status" value="pendiente"> Aún no lo sabemos</label>
+            </div>
+          </div>
+
+          <div>
+            <label for="attendingCount">¿Cuántos vendréis?</label>
+            <input id="attendingCount" type="number" min="0" step="1" placeholder="0">
+          </div>
+
+          <div>
+            <label for="dietNotes">Alergias, intolerancias o preferencias</label>
+            <textarea id="dietNotes" placeholder="Cuéntanos aquí cualquier detalle importante"></textarea>
+          </div>
+
+          <div>
+            <label for="songRequest">Canción que no puede faltar</label>
+            <input id="songRequest" type="text" placeholder="Tu canción">
+          </div>
+
+          <div>
+            <label for="message">Mensaje para nosotros</label>
+            <textarea id="message" placeholder="Nos encantará leerte"></textarea>
+          </div>
+
+          <button id="saveBtn" class="btn" type="submit">Guardar respuesta</button>
+        </form>
+
+        <div id="successBox" class="success hidden" style="margin-top:14px">
+          <h3 id="successTitle">¡Respuesta guardada!</h3>
+          <p id="successText">Gracias por responder.</p>
+        </div>
+
+        <div class="grid two" style="margin-top:14px">
+          <a id="verDetalles" class="btn secondary" href="../detalles/">Ver detalles</a>
+          <a id="volverInvitacion" class="btn secondary" href="../">Volver a la invitación</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../assets/site-config.js"></script>
+  <script src="../assets/confirm.js"></script>
+  <script>
+    (function () {
+      const cfg = window.WEDDING_CONFIG || {};
+      const gift = cfg.regaloConfirmacion;
+      if (!gift) return;
+
+      const card = document.getElementById("giftCard");
+      const title = document.getElementById("giftTitle");
+      const text = document.getElementById("giftText");
+      const iban = document.getElementById("giftIban");
+      const titular = document.getElementById("giftTitular");
+      const btn = document.getElementById("copyIbanBtn");
+      const ok = document.getElementById("copyOk");
+
+      title.textContent = gift.titulo || "Regalo";
+      text.textContent = gift.texto || "";
+      iban.textContent = gift.iban || "—";
+      titular.textContent = gift.titular || "—";
+      card.classList.remove("hidden");
+
+      btn.addEventListener("click", async function () {
+        try {
+          await navigator.clipboard.writeText((gift.iban || "").trim());
+          ok.textContent = "IBAN copiado";
+          setTimeout(() => ok.textContent = "", 2500);
+        } catch (e) {
+          ok.textContent = "No he podido copiarlo";
+          setTimeout(() => ok.textContent = "", 2500);
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
